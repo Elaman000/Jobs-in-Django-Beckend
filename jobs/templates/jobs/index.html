@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static "jobs/css/style.css" %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{{ title }}</title>
+</head>
+<body>
+    <div id="jobs-list">
+        <!-- Шапка сайта -->
+        <div class="heder-block">
+                <div class="inline-block">
+                    <a href="{% url "home" %}">
+                        <div class="logo-name-company">
+                            <img src="{% static "jobs/images/Frame 158.png" %}" alt="">
+                            <span>Работа</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="block-menu-head inline-block">
+                    <a {% if request.path == "/" %}
+                                style="text-decoration: underline;"
+                            {% endif %}
+                        href="{% url 'home' %}">Главная
+                    </a>
+                    {% for list in menu %}
+                        <a class=""  
+                            {% if request.path == list.url_name %}
+                                style="text-decoration: underline;"
+                            {% endif %}
+                        href="{{ list.url_name }}">{{ list.name }}</a>
+                    {% endfor %}
+                </div>
+                <div class="inline-block block-autech-head">
+                    {% if request.user.is_authenticated %}
+                        <a class=""  href="{% url "profile" %}">{{ user.username }}</a><a href="{% url "logout" %}">Выйти</a>
+                    {% else %}
+                        <a class=""   href="{% url "register" %}">Регистратция</a><a href="{% url "login" %}">Войти</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% block content %}
+            {% if request.path == "/" %}
+            <div class="block-content">
+                <!-- Главай контент -->
+                <div class="body-main-jobs">
+                    <div class="block main-jobs-content-block">
+                        <h1>Краткосрочные и долгосрочные работы!</h1>
+                        <p>Найдите подработку на день или месяц. Удобные варианты для одного или команды.</p>
+                        <form  method="get" action="{% url 'vakatsi' %}">
+                            <div class="input-group mb-3">
+                                    <input type="search" class="form-control" name="search" placeholder="Что вы ишите?" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    <button class="btn btn-outline-secondary" type="submit" >Найти</button>
+                            </div>
+                        </form>
+                        <p>Выберите рубрику, чтобы найти ваше</p>
+                        <div class="heading">
+                            <form method="get" action="{% url 'vakatsi' %}">
+                                {% for i in type_of_work %}
+                                    <button type="submit" name="search" value="{{i.1}}">{{i.1}}</button>
+                                {% endfor %}
+                            </form>
+                        </div>
+                    </div>
+                    <div class="block main-jobs-img-block">
+                        <img src="{% static 'jobs/images/Group 11.png' %}" alt="dwddw">
+                    </div>
+                </div>
+            <br><br><br>
+                <h4>Актуальные вакасии</h4>
+            <br>
+            <div class="block-main-applicants">
+                {% for posts in post %}
+                    <div class="main-card_vakansi">
+                        <div class="main-card-body">
+                            <h5 class="main-card-title">{{ posts.title }}</h5>
+                            <span class="main-card-experience">{{ posts.get_experience_display }}</span>
+                            
+                            <p class="main-card-text-info">{{ posts.title_info }}</p>
+                            <span class="main-card-wage">{{ posts.wage }}сом</span><br>
+                            <span>
+                                {% if posts.company %}
+                                    <i class="icon-card-jobs fa-solid fa-briefcase"></i>
+                                    <a href="{% url 'company' posts.company.id %}">
+                                        <span class="card-text"> {{ posts.company }}</span>
+                                    </a>
+                                {% else %}
+                                    <i class="icon-card-jobs fa-solid fa-circle-user"></i>
+                                    <span class="card-text">{{ posts.user }}</span>
+                                {% endif %}
+                            </span>
+                            <div class="card-jobs-data_add">{{posts.time_create|date:"d M Y"}}</div>
+                            <p>
+                                <i class="fa-regular fa-map"></i>
+                                <span class="main-card-text">{{ posts.city }}, {{posts.area}}</span>
+                            </p>
+                            <a href="{% url 'post' posts.id %}">
+                                <button>Посмотреть</button>
+                            </a>
+                            <div class="card-jobs-botton-save">
+                                <i class="fa-regular fa-bookmark"></i>
+                            </div>
+                        </div> 
+                    </div>
+            {% endfor %}
+            <a href="{% url "vakatsi" %}">
+                <div class="block-all-button main-card_vakansi">
+                    <span>Смотреть все вакасии</span>
+                </div>
+            </a>
+        </div>
+        <br><hr><br>
+        <h4>Актуальные соискатели</h4>
+        <div class="block-main-applicants">
+            {% for i in user_profile %}
+                <div class="main-card_vakansi">
+                    <div class="logo-name-activity">
+                        <img class=""
+                            {% if i.photo %}
+                                src="{{i.photo.url}}"
+                            {% else %}
+                                {% if i.get_gender_display == "Мужчина" %}
+                                    src="{% static 'jobs/images/user men.png' %}"
+                                {% else %}
+                                    {% if i.get_gender_display == 'Женшина' %}
+                                        src="{% static 'jobs/images/user women.png' %}"
+                                    {% endif %}
+                                    src="{% static 'jobs/images/user.png' %}"
+                                {% endif %}
+                            {% endif %}
+                        alt="{{ i.username }} logo">
+                        <div>
+                            <h6>
+                                {% if not i.first_name %}
+                                    {{ i.username }}
+                                {% else %}
+                                    {{i.first_name}} {{ i.last_name }}
+                                {% endif %}
+                            </h6>
+                            <span style="color: orange;">{{i.get_activity_display}}</span>
+                        </div>
+                    </div>
+                    <div class="block-content-users-card">
+                        <h5>{{i.name_activity}}</h5>
+                        <p>Рабртает:
+                            {% if i.team %}
+                                С командой 
+                                    {% if i.number_persons == None %}
+                                        больше 2 человек
+                                    {% else %}
+                                        из {{ i.number_persons }} человек
+                                    {% endif %}
+                            {% else %}
+                                Одиночку
+                            {% endif %}
+                        </p>
+                        {% if i.desired_salary %}
+                        Требоваемая <span class="main-card-wage">{{ i.desired_salary }}сом</span><br>
+                        {% endif %}
+                        <a href="{% url 'profile_user' i.id %}">
+                            <button>Посмотреть</button>
+                        </a>
+                        <div class="card-jobs-data_add">{{i.time_create|date:"d M Y"}}</div>
+                        <div class="card-jobs-botton-save">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            {% endfor %}
+            <a href="{% url 'applicant' %}">
+                <div class="block-all-button main-card_vakansi">
+                    <span>Посмотреть всех соискателей</span>
+                </div>
+            </a>
+        </div>
+        <br><br><br>
+        {% endif %}
+        {% endblock %}
+    </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

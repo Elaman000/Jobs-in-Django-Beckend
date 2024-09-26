@@ -1,0 +1,52 @@
+{% extends "jobs/index.html" %}
+{% block content %}
+
+
+
+<div class="block_post">
+    <div class="block-vakanci_post">
+        <div class="block-vakanci" >
+            <h3 class="card-title">
+                {% if not user_profile.first_name%}
+                    {{user_profile.username}}
+                {% else %}
+                    {{user_profile.first_name}} {{user_profile.last_name}}
+                {% endif %}
+            </h3>
+            <p style="color: #00000077; font-weight: 600;">{{user_profile.get_activity_display}}</p>
+            <i class="fa-solid fa-briefcase"></i> <a href="{% url 'company' comp.0.id %}">"{{comp.0}}"</a> <br><br>
+            <span><i class="fa-brands fa-telegram"></i> {{user_profile.telegram}}</span><br>
+            <span><i class="fa-brands fa-whatsapp"></i> {{user_profile.whatsapp}}</span><br>
+            <span><i class="fa-solid fa-phone"></i> {{user_profile.phone}}</span><br>
+            <span><i class="fa-solid fa-globe"></i> {{user_profile.web_url}}</span><br>
+            <br>
+            <span style="color: #00000077; font-weight: 600;">Предприятие опубликована: {{ user_profile.time_create|date:"d M Y" }}</span>
+        </div>
+        <div class="block-user-vakanci" style="width: 18rem;">
+            <h6> Активные вакасии пользователя</h6>
+            <ul>
+                {% for i in jubs%}
+                <li><a style="color: black;" href="{% url 'post' i.id %}">{{i}}</a></li>
+                {% endfor %}
+            </ul>
+            
+        </div>
+    </div>
+    <br>
+    {% if user_profile.applicant %}
+    <h5>Резюме</h5>
+        <div class="card">
+            <img style="width: 150px;height: 150px;" src="{{user_profile.photo.url}}" alt="">
+        </div>
+    {% endif %}
+</div>
+
+
+
+
+<script>
+    function goBack() {
+    window.history.back();
+}
+</script>
+{% endblock %}

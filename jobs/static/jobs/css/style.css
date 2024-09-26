@@ -1,0 +1,663 @@
+.heder-block a{
+	text-decoration: none;
+}
+.heder-block{
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 80%;
+	left: 50%;
+	height: 80px;
+	transform: translate(-50%);
+	border-bottom: 1px solid #28282827;
+
+}
+.inline-block{
+	display: inline-block;
+}
+.logo-name-company{
+	display: flex;
+	align-items: center;
+	margin: 15px 0;
+}
+
+.logo-name-company img{
+	width: 40px;
+	margin-right: 10px;
+}
+.logo-name-company span{
+	font-family: "Oswald", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	font-size: 1.6rem;
+	font-weight: 600;
+	color: #282828;
+
+}
+
+
+.block-autech-head, .block-menu-head{
+	display: flex;
+	justify-content: space-around;
+}
+
+.block-autech-head{
+	width: 10em;
+}
+.block-menu-head{
+	width: 20em;
+}
+.block-menu-head a, .block-autech-head a{
+	color: #282828;
+	cursor: pointer;
+}
+.block-menu-head a:hover, .block-autech-head a:hover{
+	color: #1679a0;
+}
+
+
+
+/* <!-- Главай контент --> */
+
+.body-main-jobs{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: auto;
+	margin-top: 30px;
+}
+
+.body-main-jobs .block{
+	width: 50%;
+}
+
+.body-main-jobs input{
+	width: 80%;
+}
+
+
+.main-jobs-content-block h1, .main-jobs-content-block p{
+	font-optical-sizing: auto;
+	font-style: normal;
+	color: #282828;
+}
+
+.main-jobs-content-block h1{
+	font-family: "Oswald", sans-serif;
+	font-weight: 600;
+}
+
+.main-jobs-content-block p{
+	margin-top: 20px;
+	font-family: "Montserrat", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 500;
+
+}
+
+
+@media screen and (max-width: 1100px) {
+	.main-jobs-content-block{
+		text-align: center;
+	}
+	.body-main-jobs .block{
+		width: auto;
+
+	}
+	.main-jobs-img-block{
+		display: none;
+	}
+}
+
+.body-main-jobs form{
+	position: relative;
+	margin:2.2em 0;
+}
+
+
+.body-main-jobs .button-search{
+	position: absolute;
+	border: none;
+	background-color: #282828;
+	color: #f0f0f0;
+	border-radius: 2em;
+	width: 120px;
+	height: 100%;
+	left: 54%;
+}
+.heading form{
+	margin: 0 0 40px 0;
+}
+.body-main-jobs .heading button{
+	border: 1px solid rgba(0, 0, 0, 0.148);
+	border-radius: 2em;
+	padding: 10px 20px;
+	margin: 10px 5px 0px 10px;
+	cursor: pointer;
+	display: inline-block;
+	background-color: #00000000;
+	transition: 0.70s;
+}
+.body-main-jobs .heading button:hover{
+	border: 1px solid rgb(0, 0, 0);
+	
+}
+
+
+.block-all-button{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #16a060;
+	transition: 0.7s;
+}
+.block-all-button:hover{
+	text-decoration: underline;
+	background-color: #16a060c6;
+	color: white;
+	font-size: 1.1em;
+	box-shadow: 0px 0px 10px #00000051;
+	border: 1px solid rgba(0, 0, 0, 0.221);
+}
+
+/* Карточка вакасии */
+
+.main-card-wage{
+	color: #16a060;
+	font-size: 1.4em;
+	font-weight: 700;
+}
+
+.main-card_vakansi button{
+	position: absolute;
+	bottom: 25px;
+	background-color: #00000000;
+	border-radius: 0.5em;
+	border: 1px solid #16a060;
+	padding: 10px 15px;
+	color: #16a060;
+	font-weight: 600;
+	transition: 0.4s;
+}
+
+.main-card_vakansi button:hover{
+	background-color: #16a060;
+	color: #ffffff;
+}
+
+
+
+/* Карточка соискателя */
+
+
+.block-content{
+	margin: 0 10%;
+}
+
+
+
+
+
+/* Страница вакасии */
+.blick-search-vakanci{
+	width: 100%;
+}
+.blick-search-vakanci i{
+	margin-left: 5px;
+}
+.blick-search-vakanci .div_urls_blick{
+	padding: 10px 15px;
+	background-color: #cfe2ff;
+	display: inline-block;
+	border-radius: 0.5em;
+	margin:5px 0px;
+}
+.div_urls_blick{
+	position: relative;
+	transition: 0.2s;
+	cursor: pointer;
+}
+
+.clue-search{
+	position: absolute;
+	border: 1px solid black;
+	background-color: #f4f4f4;
+	border-radius: 0.2em;
+	width: auto;
+	padding: 0 3px;
+	font-size: 0.9em;
+	display: flex;
+	justify-content: center;
+	display: none;
+	transition: 0.5s;
+}
+.div_urls_blick:hover{
+	background-color: rgba(251, 10, 10, 0.467);
+}
+.div_urls_blick:hover 
+.clue-search{
+	top: -20px;
+	right: -0%;
+	display: block;
+}
+
+
+.main-jobs-img-block{
+	width: 50%;
+	height: auto;
+}
+.main-jobs-img-block img{
+	width: 100%;
+}
+
+
+
+
+
+
+
+/* Вакансия стриницы post */
+
+.block_post{
+	display: block;
+	width: 80%;
+	height: auto;
+	position: relative;
+	left: 50%;
+	transform: translate(-50%);
+	margin-top: 30px;
+}
+
+.block-vakanci_post{
+	display: flex;
+}
+
+.block-vakanci{
+	width: 100%;
+	height: auto;
+	border: 1px solid rgba(0, 0, 0, 0.282);
+	border-radius: 0.6em;
+	padding: 10px 15px;
+}
+.block-user-vakanci{
+	position: relative;
+	border: 1px solid rgba(0, 0, 0, 0.282);
+	border-radius: 0.6em;
+	margin-left: 10px;
+	padding: 10px 15px;
+	
+}
+
+
+.block-similar-vakanci{
+	color: #000;
+	width: 100%;
+	padding: 10px 15px;
+	border-radius: 0.6em;
+	margin-bottom: 10px;
+	border: 1px solid rgba(0, 0, 0, 0.282);
+	transition: 0.5s;
+}
+.block-similar-vakanci:hover{
+	border: 1px solid rgb(0, 0, 0);
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+* {
+	box-sizing: border-box;
+}
+
+
+
+.block-main-applicants{
+	margin: 0 -5px;
+}
+
+.block-main-applicants:after{
+	content: "";
+	display: table;
+	clear: both;
+}
+
+
+.main-card_vakansi{
+	position: relative;
+	word-wrap: break-word; /* Для старых браузеров */
+    overflow-wrap: break-word;
+	float: left;
+	width: 30%;
+	min-height: 300px;
+	height: auto;
+	margin: 15px 10px;
+	padding: 20px;
+	border-radius: 0.8em;
+	border: 1px solid rgba(182, 182, 182, 0.578);
+	transition: 0.5s;
+}
+.main-card_vakansi:hover{
+	border: 1px solid rgb(0, 0, 0);
+
+}
+@media screen and (max-width: 1100px) {
+	.main-card_vakansi{
+		width: 100%;
+		display: block;
+		margin-bottom: 20px; 
+	}
+} 
+
+.logo-name-activity{
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-end;
+}
+
+.logo-name-activity img{
+	border: 0.5px solid rgba(0, 0, 0, 0.237);
+	width: 4.5em;
+	height: 4.5em;
+	display: inline-block;
+	border-radius: 1em;
+}
+.logo-name-activity div{
+	margin-left: 10px;
+}
+.block-content-users-card{
+	margin: 20px 30px;
+}
+
+
+.block-profolCard-jobs{
+	border: 1px solid rgba(0, 0, 0, 0.155);
+	border-radius: 1em;
+	padding: 10px 15px;
+	transition: 0.7s;
+}
+.block-profolCard-jobs:hover{
+	border: 1px solid rgba(0, 0, 0, 0.614);
+
+}
+
+
+.rating-area {
+	overflow: hidden;
+	width: 265px;
+	margin: 0 auto;
+}
+.rating-area:not(:checked) > input {
+	display: none;
+}
+.rating-area:not(:checked) > label {
+	float: right;
+	width: 42px;
+	padding: 0;
+	cursor: pointer;
+	font-size: 32px;
+	line-height: 32px;
+	color: lightgrey;
+	text-shadow: 1px 1px #bbb;
+}
+.rating-area:not(:checked) > label:before {
+	content: '★';
+}
+.rating-area > input:checked ~ label {
+	color: gold;
+	text-shadow: 1px 1px #c60;
+}
+.rating-area:not(:checked) > label:hover,
+.rating-area:not(:checked) > label:hover ~ label {
+	color: gold;
+}
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
+	color: gold;
+	text-shadow: 1px 1px goldenrod;
+}
+.rate-area > label:active {
+	position: relative;
+}
+
+/* вывод Звездный рейтинг */
+
+.rating-mini {
+	display: inline-block;
+	font-size: 0;
+}
+.rating-mini span {
+	padding: 0;
+	font-size: 20px;
+	line-height: 1;
+	color: lightgrey;
+}
+.rating-mini > span:before {
+	content: '★';
+}
+.rating-mini > span.active {
+	color: gold;
+}
+
+
+
+
+.body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+	margin-top: 2%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content {
+    max-width: 600px;
+}
+
+.designer {
+    color: orange;
+    font-size: 24px;
+}
+
+.name {
+    color: black;
+    font-size: 24px;
+}
+
+.skills {
+    margin-top: 10px;
+}
+
+.skills span {
+    display: inline-block;
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.logo{
+	position: relative;
+}
+
+.logo .icon_settings{
+	top: 25px;
+	right: 25px;
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	background-color: rgb(152, 152, 152);
+	border-radius: 100%;
+	z-index: 2;
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	cursor: pointer;
+}
+
+.logo img{
+    width:400px;
+	height: 400px;
+}
+
+.accordion{
+	margin-left: 10%;
+	width: 40em;
+}
+.block_info_jobs_company{
+	margin-top: 35px;
+	width: 80%;
+}
+.block_info_jobs_company{
+	margin: 35px 10%;
+
+}
+
+
+
+.block_filter_vakansi{
+	display: block;
+	width: 80%;
+	height: auto;
+	position: relative;
+	/* border: 1px solid red; */
+	left: 50%;
+	transform: translate(-50%);
+	padding-left: 250px;
+	margin-top: 30px;
+}
+
+.aside-left {
+	position: fixed;
+	top: 0;
+	left: 0;
+    float: left;
+	width: 240px;
+    height: 100vh;
+	border-radius: 0.5em;
+    margin-right: 30px;
+	z-index: 2;
+}
+
+
+aside .accordion{
+	width: 100%;
+	margin-left:0px;
+}
+
+
+.card_vakansi{
+	border: 1.8px solid rgba(160, 160, 160, 0.645);
+	border-radius: 0.5em;
+	width: 100%;
+	padding: 20px 30px;
+	color: black;
+	position: relative;
+	margin-bottom: 15px;
+	transition: 0.5s;
+}
+.card_vakansi:hover{
+	border: 1.8px solid rgb(0, 0, 0);
+
+}
+.card_vakansi .card-wage{
+	font-weight:bold;
+	font-size:2rem;
+}
+.card_vakansi .card-wage,.card-experience{
+	color: #16a060;
+	
+}
+
+.card_vakansi .icon-card-jobs{
+	font-size: 1.3rem;
+}
+
+.card-jobs-data_add{
+	position: absolute;
+	bottom: 25px;
+	right: 35px;
+	font-weight: 400;
+	color: #00000092;
+}
+.card-jobs-botton-save{
+	display: flex;
+	justify-content: end;
+	align-items: start;
+	width: 2rem;
+	height: 2rem;
+	position: absolute;
+	top: 25px;
+	right: 35px;
+	font-size: 1.5rem;
+	cursor: pointer;
+	color: #00000083;
+}
+.btn-group-vertical label{
+	border-radius: 0;
+}
+.btn-filter-city{
+	display: grid;
+	justify-self: start;
+	
+}
+
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}

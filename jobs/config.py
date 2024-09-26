@@ -1,0 +1,7 @@
+# config.py
+BOT_TOKEN = '6709062999:AAF3YN4gb806qzaiDxsYXRK3RS_9ottAEP0' # Token
+#GROUP_ID = -1002175148690  # Пример ID группы
+GROUP_ID = -1002162082877  # Пример ID канала
+
+GROUP_ID_OSH = -1002175148690  
+

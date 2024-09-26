@@ -1,0 +1,38 @@
+{% extends "jobs/index.html" %}
+
+{% block content %}
+<title>{{ title }}</title>
+<h1>{{ title }}</h1>
+
+<form action="{% url 'add_vacancy' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ form.errors }}
+
+    <button type="submit">Добавить</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#id_city').change(function() {
+            var cityId = $(this).val();
+            $.ajax({
+                url: "{% url 'get_areas_by_city' %}",
+                data: {
+                    'city_id': cityId
+                },
+                success: function(data) {
+                    var areaSelect = $('#id_area');
+                    areaSelect.empty();
+                    data.areas.forEach(function(area) {
+                        var option = $('<option></option>').attr('value', area.id).text(area.area);
+                        areaSelect.append(option);
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "jobs/index.html" %}
+
+{% block content %}
+<title>{{ title }}</title>
+    <h1>{{ title }}</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{ form.errors }}
+        
+        <button type="submit">Добавить</button>
+    </form>
+
+{% endblock %}

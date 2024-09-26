@@ -1,0 +1,284 @@
+{% extends "jobs/index.html" %}
+{% load static %}
+{% block content %}
+<title>{{ title }}</title>
+
+
+
+
+<div class="block_filter_vakansi">
+    <div class="blick-search-vakanci" id="id_search_vakanci">
+    </div>
+    <aside class="aside-left">
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        <h5>График работы</h5>
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <input type="radio" class="btn-check" name="schedule" value="all" id="schedule-all" autocomplete="off" checked onchange="sendGetRequest('schedule', this.value)">
+                        <label class="btn" for="schedule-all">Все выборы</label>
+                        {% for i in schedule %}
+                            <input type="radio" class="btn-check" name="schedule" value="{{i.1}}" id="schedule-{{i.0}}" autocomplete="off" onchange="sendGetRequest('schedule', this.value)">
+                            <label class="btn" for="schedule-{{i.0}}">{{i.1}}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                        <h5>Переезд</h5>
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="btn-filter-relocation" >
+                            <input type="radio" class="btn-check" name="relocation" value="all" id="relocation-all" autocomplete="off" checked onchange="sendGetRequest('relocation', this.value)">
+                            <label class="btn" for="relocation-all">Все выборы</label>
+                            {% for i in relocation %}
+                                <input type="radio" class="btn-check" name="relocation" value="{{i.1}}" id="relocation-{{i.0}}" autocomplete="off"  onchange="sendGetRequest('relocation', this.value)">
+                                <label class="btn" for="relocation-{{i.0}}">{{i.1}}</label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree2" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                        <h5>Образование</h5>
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree2" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="btn-filter-education" >
+                            <input type="radio" class="btn-check" name="education" value="all" id="education-all" autocomplete="off" checked onchange="sendGetRequest('education', this.value)">
+                            <label class="btn" for="education-all">Все выборы</label>
+                            {% for i in education %}
+                                <input type="radio" class="btn-check" name="education" value="{{i.1}}" id="education-{{i.0}}" autocomplete="off" onchange="sendGetRequest('education', this.value)">
+                                <label class="btn" for="education-{{i.0}}">{{i.1}}</label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree3" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                        <h5>Опыт работы</h5>
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree3" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="btn-filter-experience" >
+                            <input type="radio" class="btn-check" name="experience" value="all" id="experience-all" autocomplete="off" checked onchange="sendGetRequest('experience', this.value)">
+                            <label class="btn" for="experience-all">Все выборы</label>
+                            {% for i in experience %}
+                                <input type="radio" class="btn-check" name="experience" value="{{i.1}}" id="experience-{{i.0}}" autocomplete="off" onchange="sendGetRequest('experience', this.value)">
+                                <label class="btn" for="experience-{{i.0}}">{{i.1}}</label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </aside>
+    <main>
+        <div>
+            <form  method="get" action="{% url 'applicant' %}">
+                <div class="input-group mb-3">
+                        <input type="search" id="id_input_search" class="form-control" name="search" placeholder="Что вы ишите?" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="submit" >Найти</button>
+                </div>
+            </form>
+        </div>
+        <div class="all-jobs-vakatsi">
+            {% if not profile_user %}
+                <h4>Нет активных вакасии</h4>
+            {% endif %}
+                
+                
+            {% for i in profile_user %}
+                <a href="/profile/{{i.id}}/">
+                    <div class="card_vakansi">
+                        <div class="logo-name-activity">
+                            <img class=""
+                                {% if i.photo %}
+                                    src="{{i.photo.url}}"
+                                {% else %}
+                                    {% if i.get_gender_display == "Мужчина" %}
+                                        src="{% static 'jobs/images/user men.png' %}"
+                                    {% else %}
+                                        {% if i.get_gender_display == 'Женшина' %}
+                                            src="{% static 'jobs/images/user women.png' %}"
+                                        {% endif %}
+                                        src="{% static 'jobs/images/user.png' %}"
+                                    {% endif %}
+                                {% endif %}
+                            alt="{{ i.username }} logo">
+                            <div>
+                                <h6>
+                                    {% if not i.first_name %}
+                                        {{ i.username }}
+                                    {% else %}
+                                        {{i.first_name}} {{ i.last_name }}
+                                    {% endif %}
+                                </h6>
+                                <span style="color: orange;">{{i.get_activity_display}}</span>
+                            </div>
+                        </div>
+
+                        <div class="block-content-users-card">
+                            <h5>{{i.name_activity}}</h5>
+                            <p>{{i.description}}</p>
+                            <p>Рабртает:
+                                {% if i.team %}
+                                    С командой 
+                                        {% if i.number_persons == None %}
+                                            больше 2 человек
+                                        {% else %}
+                                            из {{ i.number_persons }} человек
+                                        {% endif %}
+                                {% else %}
+                                    Одиночку
+                                {% endif %}
+                            </p>
+                            <p>{{i.address}}</p>
+                            <p>Опубликовано: {{ i.last_modified|date:"d M Y" }}</p>
+                            
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+
+        </div>
+        
+    </main>
+</div>
+
+<script>
+// Функция для обновления URL с параметрами
+function sendGetRequest(paramName, paramValue) {
+    // Получаем текущий URL
+    var currentUrl = new URL(window.location.href);
+
+    if (paramValue === 'all') {
+        // Удаляем параметр из URL
+        currentUrl.searchParams.delete(paramName);
+    } else {
+        // Обновляем или добавляем параметр в URL
+        currentUrl.searchParams.set(paramName, paramValue);
+    }
+
+    // Перенаправляем на новый URL с обновленными параметрами
+    window.location.href = currentUrl.toString();
+}
+// Функция для установки состояния радио-кнопок на основе параметров URL
+function setRadioButtonStates() {
+    var params = new URLSearchParams(window.location.search);
+    params.forEach(function(value, key) {
+        var radio = document.querySelector(`input[name="${key}"][value="${value}"]`);
+        if (radio) {
+            radio.checked = true;
+        }
+    });
+
+
+
+
+
+
+    const urlParams = new URLSearchParams(window.location.search);
+        html = ''
+
+        const searchValue = urlParams.get('search');
+        const scheduleValue = urlParams.get('schedule');
+        const educationValue = urlParams.get('relocation');
+        const relocationValue = urlParams.get('education');
+        const experienceValue = urlParams.get('experience');
+
+        if (searchValue) {
+            html += `
+                    <div id="div_urls_blick" class="div_urls_blick" data-query="search">
+                        <div class="clue-search">Удалить фильтр</div>
+                        <span>Город: <strong>${searchValue}</strong></span>
+                        <i class="fa-solid fa-x"></i>
+                    </div>`
+        }
+        if (scheduleValue) {
+            html += `
+                    <div id="div_urls_blick" class="div_urls_blick" data-query="schedule">
+                        <div class="clue-search">Удалить фильтр</div>
+                        <span>Город: <strong>${scheduleValue}</strong></span>
+                        <i class="fa-solid fa-x"></i>
+                    </div>`
+        }
+        if (educationValue) {
+            html += `
+                <div id="div_urls_blick" class="div_urls_blick" data-query="relocation">
+                        <div class="clue-search">Удалить фильтр</div>
+                    <span>Оплата выше: <strong>${educationValue}сом</strong></span>
+                    <i class="fa-solid fa-x"></i>
+                </div>
+            `
+        }
+        if (relocationValue) {
+            html += `
+                <div id="div_urls_blick" class="div_urls_blick" data-query="education">
+                        <div class="clue-search">Удалить фильтр</div>
+
+                    <span>Поиск: <strong>${relocationValue}</strong></span>
+                    <i class="fa-solid fa-x"></i>
+                </div>`
+        }
+        if (experienceValue) {
+            html += `
+                <div id="div_urls_blick" class="div_urls_blick" data-query="experience">
+                        <div class="clue-search">Удалить фильтр</div>
+
+                    <span>Опыт: <strong>${experienceValue}</strong></span>
+                    <i class="fa-solid fa-x"></i>
+                </div>`
+        }
+
+        const divElement = document.getElementById('id_search_vakanci');
+        // Устанавливаем innerHTML
+        if (divElement) {
+            divElement.innerHTML = html;
+        }
+
+        // Функция для удалени фильтра
+        document.querySelectorAll('div[data-query]').forEach(button => {
+            button.addEventListener('click', () => {
+                const dataQuery = button.getAttribute('data-query');
+                var url = new URL(window.location.href);
+                url.searchParams.delete(dataQuery)
+                window.location.href = url.toString();
+            });
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+// Установка состояния радио-кнопок при загрузке страницы
+window.onload = setRadioButtonStates;
+    </script>
+
+
+{% endblock %}

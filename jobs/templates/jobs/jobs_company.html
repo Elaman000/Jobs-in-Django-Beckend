@@ -1,0 +1,109 @@
+{% extends "jobs/index.html" %}
+{% block content %}
+
+
+
+
+<div class="block_post">
+    <div class="block-vakanci_post">
+        <div class="block-vakanci" >
+            <div style="display: flex;justify-content: start; align-items: center;">
+                {% if post.logo %}
+                    <img style="width: 100px; height: 100px; margin-right: 15px;" src="{{ post.logo.url }}" class="img-thumbnail">
+                {% endif %}
+                <span>
+                    <h5 class="card-title">{{ post.name }}</h5>
+                    <span>{{ post.get_activity_display }}</span>
+                </span>
+            </div>
+            <p class="card-text">{{ post.description }}</p>
+            <p class="card-text"><b>Адрес: </b>{{ post.address }}</p>
+            <span><i class="fa-brands fa-telegram"></i> {{post.telegram}}</span><br>
+            <span><i class="fa-brands fa-whatsapp"></i> {{post.whatsapp}}</span><br>
+            <span><i class="fa-solid fa-phone"></i> {{post.phone}}</span><br>
+            <span><i class="fa-solid fa-globe"></i> {{post.web_url}}</span><br>
+        </div>
+        <div class="block-user-vakanci" style="width: 18rem;">
+            <h5>
+                {% if not post.owner.first_name %}
+                {{ post.owner }}
+            {% else %}
+                {{ post.owner.first_name}} {{ post.owner.last_name}}
+            {% endif %}
+            </h5>
+            <p class="card-text">{{ post.owner.name_activity }}</p>
+            <p class="card-text">{{ post.owner.description }}</p>
+            <p class="card-text">{{ post.owner.address }}</p>
+            <span><i class="fa-brands fa-telegram"></i> {{post.owner.telegram}}</span><br>
+            <span><i class="fa-brands fa-whatsapp"></i> {{post.owner.whatsapp}}</span><br>
+            <span><i class="fa-solid fa-phone"></i> {{post.owner.phone}}</span><br>
+            <span><i class="fa-solid fa-globe"></i> {{post.owner.web_url}}</span><br>
+            <a href="{% url 'profile_user' post.owner.id %}"><button style="margin-top: 15px;" class="btn btn-primary">Подробне</button></a>
+        </div>
+    </div>
+
+
+
+
+    <div class="block_info_jobs_company" style="width: 100%; margin-left: -0%;">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Отзывы</button>
+                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Вакасии компани</button>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                <br>
+                <div class="">
+                    <div class="card card-body">
+                        <form class="row g-3" method="post">
+                            {% csrf_token %}
+                            {{ review_form.as_p }}
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary mb-3">отправить</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="">
+                        {% for review in reviews %}
+                        <a href=""><h6>{{ review.user.username }}</h6></a>
+                        <div class="rating-mini">
+                            {% for i in rating_range %}
+                                <span class="{% if i <= review.rating %}active{% endif %}"></span>
+                            {% endfor %}
+                        </div>
+                        <p>{{ review.created_at }}</p>
+                        <p>{{ review.review_text }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                <br>
+                {% for i in jobs %}
+                <a style="text-decoration: none;" href="{% url 'post' i.id %}">
+                    <div class="block-similar-vakanci">
+                        <h5 class="card-title">{{ i.title }}</h5>
+                        <h5 class="card-text" style="font-weight: 700; color: #16a060;">От {{ i.wage }} сом</h5>
+                        <p class="card-text">{{ i.content }}</p>
+                        <p class="card-text">{{ i.city }}, {{ i.area }}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+<script>
+    function goBack() {
+    window.history.back();
+}
+</script>
+{% endblock %}

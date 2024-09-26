@@ -1,0 +1,319 @@
+{% extends "jobs/index.html" %}
+{% load static %}
+{% block content %}
+<title>{{ title }}</title>
+
+<div class="body">
+    <div class="container">
+        <div class="content">
+            <span class="designer">
+                {% if user_profile.applicant%}
+                {{user_profile.get_activity_display}}
+                {% endif%}
+            </span>
+            <h1>
+                {% if not user_profile.first_name%}
+                    {{user_profile.username}}
+                {% else %}
+                    {{user_profile.first_name}} {{user_profile.last_name}}
+                {% endif %}
+            </h1>
+            <a href="" style="cursor: pointer;"></a>
+                <p>{{user_profile.description}}</p>
+            <div class="skills">
+                    {% for skill in skills %}
+                        <span>{{ skill.text }}</span>
+                    {% endfor %}
+
+            </div>
+        </div>
+        <div class="logo">
+            {%if user_profile.photo%}
+                <img src="{{ user_profile.photo.url }}" alt="WS Logo">
+            {%else%}
+                <img src="{% static "jobs/images/logo.jpg" %}" alt="WS Logo">
+            {%endif%}
+            <a href="{% url "settings" %}">
+                <div class="icon_settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
+                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
+                    </svg>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+            Скрыть подробную информацию
+        </button>
+        </h2>
+        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+            <div class="accordion-body">
+                <p>
+                    <strong>
+                    Пол: 
+                    </strong>
+                    {{user_profile.get_gender_display}}
+                </p>
+                <p>
+                    <strong>
+                    Эл почта:  
+                    </strong>
+                    <a href="">{{user_profile.email}}</a>
+                </p>
+                <p>
+                    <strong>
+                        Национальности:  
+                    </strong>
+                    {{user_profile.get_nationality_display}}
+                </p>
+                <p>
+                    <strong>
+                        Дата рождения:   
+                    </strong>
+                    {{user_profile.birth_date}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="block_info_jobs_company">
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Мои вакации</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Организатция</button>
+            {% if user_profile.applicant %}
+            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Мой резюме</button>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+
+
+
+
+
+        
+        <br>
+        <!-- Ваканция автора -->
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+            {% if jobs %}
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{% url 'add_vacancy' %}"><button class="btn btn-primary" type="button">Добавить ещё вакацию</button></a>
+            </div>
+            <br>
+            {% for i in jobs %}
+                <div class="block-profolCard-jobs">
+                    {% if i.company.logo %}
+                        <img src="{{ i.company.logo.url }}" alt="Логотип компании" style="width:25px; height:25px;">
+                    {% endif %}
+                    {% if i.company %}
+                        <a href="/company/{{i.company.id}}">{{i.company}}</a>
+                    {% else %}
+                        Физ.лицо @<a href="">{{i.user.username}}</a>
+                    {% endif %}
+                    <p style="font-weight: 700; font-size: 1.2em;">{{ i.title }}  </p>
+                    
+                    <p>{{i.content}}</p>
+                    <h6>{{i.wage}} сом</h6>
+                    <p>Количество необходимых человек: {{i.number_persons}}</p>
+                    <p>  {{i.time_create|date:"d M Y"}}</p>
+
+                    <a href="{% url 'edit_post' i.id %}">
+                        <button class="btn btn-primary">
+                            Изменить
+                        </button> 
+                    </a>
+                </div>
+            <br>
+            {% endfor %}
+            {% else %}
+            <span>Нет вакации</span>
+            <br>
+            <br>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{% url 'add_vacancy' %}"><button class="btn btn-primary" type="button">Добавить вакацию</button></a>
+            </div>
+            {% endif %}
+            
+        </div>
+
+
+
+
+
+        <!-- Компания -->
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+            {% if company %}
+            {% for i in company %}
+                {% if i.logo %}
+                    <img src="{{ i.logo.url }}" alt="Логотип компании" style="width:50px; height:50px;">
+                {% endif %}
+                <a href="/company/{{i.id}}"><h5>{{i.name}}</h5></a>
+                <a href="">{{i.owner}}</a>
+                <p>{{i.description}}</p>
+                <span>{{i.address}}</span>
+                <p>{{i.contact}}</p>
+                <a href="{% url 'edit_company' i.id %}">Изменить</a>
+                <br>
+                <br>
+
+            {% endfor %}
+            {% else %}
+            <div class="d-grid gap-2 d-md-block">
+                <span>Нет организатции</span>
+                <br>
+                <br>
+                <a href="{% url "add_company" %}"><button class="btn btn-primary" type="button">Создать организатцию</button></a>
+                
+            </div>
+            {% endif %}
+        </div>
+
+
+
+        <!-- Резюме -->
+        {% if user_profile.applicant %}
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                <div class="logo-name-activity">
+                    <img class=""
+                        {% if user_profile.photo %}
+                            src="{{user_profile.photo.url}}"
+                        {% else %}
+                            {% if user_profile.get_gender_display == "Мужчина" %}
+                                src="{% static 'jobs/images/user men.png' %}"
+                            {% else %}
+                                {% if user_profile.get_gender_display == 'Женшина' %}
+                                    src="{% static 'jobs/images/user women.png' %}"
+                                {% endif %}
+                                src="{% static 'jobs/images/user.png' %}"
+                            {% endif %}
+                        {% endif %}
+                    alt="{{ user_profile.username }} logo">
+                    <div>
+                        <h6>
+                            {% if not user_profile.first_name %}
+                                {{ user_profile.username }}
+                            {% else %}
+                                {{user_profile.first_name}} {{ user_profile.last_name }}
+                            {% endif %}
+                        </h6>
+                        <span style="color: orange;">{{user_profile.get_activity_display}}</span>
+                    </div>
+                </div>
+                <div class="block-content-users-card">
+                    <h5>{{user_profile.name_activity}}</h5>
+                    <p>{{user_profile.description}}</p>
+                    <p>Рабртает:
+                        {% if user_profile.team %}
+                            С командой 
+                                {% if user_profile.number_persons == None %}
+                                    больше 2 человек
+                                {% else %}
+                                    из {{ user_profile.number_persons }} человек
+                                {% endif %}
+                        {% else %}
+                            Одиночку
+                        {% endif %}
+                    </p>
+                    <p>{{user_profile.address}}</p>
+                    
+                    <p>Опубликовано: {{ user_profile.last_modified|date:"d M Y" }}</p>
+                </div>
+
+
+                <button class="btn btn-primary" id="myBtn">Изменить</button>
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+                <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Профиль пользователя</h2>
+                        <form method="post" enctype="multipart/form-data" id="user-data-form">
+                            {% csrf_token %}
+                            {{ formCustomUser.as_p }}
+                            <button class="btn btn-primary" type="submit">Сохранить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+
+<script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var modal = document.getElementById('myModal');
+var btn = document.getElementById("myBtn");
+var span = document.getElementsByClassName("close")[0];
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+span.onclick = function() {
+    modal.style.display = "none";
+}
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('user-data-form');
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+        try {
+            const response = await fetch(window.location.href, {
+                method: 'POST',
+                body: formData,
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert('Данные успешно сохранены');
+                location.reload();
+            } else {
+                alert('Ошибка при сохранении данных');
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Произошла ошибка при отправке данных');
+        }
+    });
+});
+
+
+
+</script>
+
+
+{% endblock %}

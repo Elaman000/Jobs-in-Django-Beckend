@@ -1,0 +1,290 @@
+{% extends "jobs/index.html" %}
+{% block content %}
+<title>{{ title }}</title>
+
+
+
+
+<div class="block_filter_vakansi">
+    <div class="blick-search-vakanci" id="id_search_vakanci">
+        <!-- <div>
+            <span>Город: <strong>Ош</strong></span>
+            <i class="fa-solid fa-x"></i>
+        </div> -->
+    </div>
+
+    <aside class="aside-left">
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    <h5>Город</h5>
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    <div class="btn-filter-city" >
+                        <input type="radio" class="btn-check" name="cities" value="all" id="cities-all" autocomplete="off" checked onchange="sendGetRequest('cities', this.value)">
+                        <label class="btn" for="cities-all">Все города</label>
+                        {% for i in cities %}
+                            <input type="radio" class="btn-check" name="cities" value="{{i}}" id="cities-{{i.id}}" autocomplete="off" onchange="sendGetRequest('cities', this.value)">
+                            <label class="btn" for="cities-{{i.id}}">{{i}}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                    <h5>Оплата</h5>
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <label for="search-wage">Будет выводить больше указанной суммы</label><br>
+                    <input type="number" style="margin: 10px 0;" id="search-wage" name="search-wage" placeholder="Укажыте сумму">
+                    
+                    <button class="btn btn-primary" id="wage-search-btn">Искать</button>
+                    <button class="btn btn-primary" id="wage-clear-btn">Очистить</button>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                    <h5>Опыт работы</h5>
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <div class="btn-filter-experiences" >
+                        <input type="radio" class="btn-check" name="experiences" value="all" id="experiences-all" autocomplete="off" checked onchange="sendGetRequest('experiences', this.value)">
+                        <label class="btn" for="experiences-all">Все вариянты</label>
+                        {% for i in experiences %}
+                        <input type="radio" class="btn-check" name="experiences" value="{{i.1}}" id="experiences-{{i.0}}" autocomplete="off"  onchange="sendGetRequest('experiences', this.value)">
+                        <label class="btn" for="experiences-{{i.0}}">{{i.1}}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree2" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                    <h5>График работы</h5>
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseThree2" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <div class="btn-filter-schedules" >
+                        <input type="radio" class="btn-check" name="schedules" value="all" id="schedules-all" autocomplete="off" checked onchange="sendGetRequest('schedules', this.value)">
+                        <label class="btn" for="schedules-all">Все вариянты</label>
+                        {% for i in schedules %}
+                        <input type="radio" class="btn-check" name="schedules" value="{{i.1}}" id="schedules-{{i.0}}" autocomplete="off"  onchange="sendGetRequest('schedules', this.value)">
+                        <label class="btn" for="schedules-{{i.0}}">{{i.1}}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>      
+    </aside>
+    <main>
+        <div>
+            <form  method="get" action="{% url 'vakatsi' %}">
+                <div class="input-group mb-3">
+                        <input type="search" id="id_input_search" class="form-control" name="search" placeholder="Что вы ишите?" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="submit" >Найти</button>
+                </div>
+            </form>
+        </div>
+        <div class="all-jobs-vakatsi">
+            {% if not post %}
+                <h4>Нет активных вакасии</h4>
+            {% endif %}
+            {% for posts in post %}
+            {% if posts.published %}
+            <a style="text-decoration: none;" href="{% url 'post' posts.id %}">
+            <div class="card_vakansi">
+                <div class="card-body">
+                <h4 class="card-title">{{ posts.title }}</h4>
+                <p class="card-text-info">{{ posts.title_info }}</p>
+                <span class="card-experience">{{ posts.get_experience_display }}</span>
+                <p class="card-wage">{{ posts.wage }}сом</p>
+                <p>
+                    {% if posts.company %}
+                    <i class="icon-card-jobs fa-solid fa-briefcase"></i>
+                    <span class="card-text"> {{ posts.company }}</span>
+                    {% else %}
+                    <i class="icon-card-jobs fa-solid fa-circle-user"></i>
+                    <span class="card-text">{{ posts.user }}</span>
+                    {% endif %}
+                </p>
+                <p>
+                    <i class="fa-regular fa-map"></i>
+                    <span class="card-text">{{ posts.city }}, {{posts.area}}</span>
+                </p>
+                <p>
+                    <i class="fa-regular fa-clock"></i>
+                    <span>
+                        {{posts.get_schedule_display}}
+                    </span>
+                </p>
+                </div>
+            <div class="card-jobs-botton-save">
+                <i class="fa-regular fa-bookmark"></i>
+            </div>
+            <div class="card-jobs-data_add">
+                Опубликовано {{ posts.data_add|date:"d M Y" }}
+            </div>
+        </div>
+    </a>
+        {% endif %}
+        {% endfor %}
+        </div>
+        
+    </main>
+</div>
+
+<script>
+
+function sendGetRequest(paramName, paramValue) {
+    // Получаем текущий URL
+    var currentUrl = new URL(window.location.href);
+    if (paramValue === 'all') {
+        // Удаляем параметр из URL
+        currentUrl.searchParams.delete(paramName);
+    } else {
+        // Обновляем или добавляем параметр в URL
+        currentUrl.searchParams.set(paramName, paramValue);
+    }
+    // Перенаправляем на новый URL с обновленными параметрами
+    window.location.href = currentUrl.toString();
+}
+// Обработчик для кнопки "Искать"
+document.getElementById('wage-search-btn').addEventListener('click', function() {
+    var wageValue = document.getElementById('search-wage').value;
+    if (wageValue) {
+        sendGetRequest('wage', wageValue);
+    }
+});
+// Обработчик для кнопки "Очистить"
+document.getElementById('wage-clear-btn').addEventListener('click', function() {
+    sendGetRequest('wage', 'all');
+    document.getElementById('search-wage').value = ''; // Очистка поля ввода
+});
+
+
+
+
+
+
+function setRadioButtonStates() {
+
+        // Получаем текущий URL
+        const urlParams = new URLSearchParams(window.location.search);
+        html = ''
+
+
+        const citiesValue = urlParams.get('cities');
+        const wageValue = urlParams.get('wage');
+        const searchValue = urlParams.get('search');
+        const experienceValue = urlParams.get('experiences');
+        const scheduleValue = urlParams.get('schedules');
+
+        
+        if (citiesValue) {
+            html += `
+                    <div id="div_urls_blick" class="div_urls_blick" data-query="cities">
+                        <div class="clue-search">Удалить фильтр</div>
+                        <span>Город: <strong>${citiesValue}</strong></span>
+                        <i class="fa-solid fa-x"></i>
+                    </div>`
+        }
+        if (wageValue) {
+            html += `
+                <div id="div_urls_blick" class="div_urls_blick" data-query="wage">
+                        <div class="clue-search">Удалить фильтр</div>
+
+                    <span>Оплата выше: <strong>${wageValue}сом</strong></span>
+                    <i class="fa-solid fa-x"></i>
+                </div>
+            `
+        }
+        if (searchValue) {
+            html += `
+                <div id="div_urls_blick" class="div_urls_blick" data-query="search">
+                        <div class="clue-search">Удалить фильтр</div>
+
+                    <span>Поиск: <strong>${searchValue}</strong></span>
+                    <i class="fa-solid fa-x"></i>
+                </div>`
+        }
+        if (experienceValue) {
+            html += `
+                <div id="div_urls_blick" class="div_urls_blick" data-query="experiences">
+                        <div class="clue-search">Удалить фильтр</div>
+
+                    <span>Опыт: <strong>${experienceValue}</strong></span>
+                    <i class="fa-solid fa-x"></i>
+                </div>`
+        }
+        if (scheduleValue) {
+            html += `
+                <div id="div_urls_blick" class="div_urls_blick" data-query="schedules">
+                        <div class="clue-search">Удалить фильтр</div>
+
+                    <span>График: <strong>${scheduleValue}</strong></span>
+                    <i class="fa-solid fa-x"></i>
+                </div>`
+        }
+
+        const divElement = document.getElementById('id_search_vakanci');
+        // Устанавливаем innerHTML
+        if (divElement) {
+            divElement.innerHTML = html;
+        }
+
+
+
+
+
+
+// Функция для установки состояния радио-кнопок на основе параметров URL
+var params = new URLSearchParams(window.location.search);
+params.forEach(function(value, key) {
+    var radio = document.querySelector(`input[name="${key}"][value="${value}"]`);
+        if (radio) {
+            radio.checked = true;
+        }
+    });
+
+// Функция для удалени фильтра
+document.querySelectorAll('div[data-query]').forEach(button => {
+    button.addEventListener('click', () => {
+        const dataQuery = button.getAttribute('data-query');
+        var url = new URL(window.location.href);
+        url.searchParams.delete(dataQuery)
+        window.location.href = url.toString();
+    });
+});
+
+
+
+
+
+
+// Установка значения в поле "search-wage" при загрузке страницы
+    var params = new URLSearchParams(window.location.search);
+    var wage = params.get('wage');
+    if (wage) {
+        document.getElementById('search-wage').value = wage;
+    }
+}
+
+// Установка состояния радио-кнопок при загрузке страницы
+window.onload = setRadioButtonStates;
+</script>
+
+
+{% endblock %}

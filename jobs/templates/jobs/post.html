@@ -1,0 +1,112 @@
+{% extends "jobs/index.html" %}
+{% block content %}
+
+<div class="block_post">
+    <div class="block-vakanci_post">
+        <div class="block-vakanci" >
+                <h3 class="card-title">{{ post.title }}</h3>
+                <h4 class="card-text" style="font-weight: 700; color: #16a060;">От {{ post.wage }} сом</h4>
+                <p style="color: #149458;">{{post.title_info}}</p>
+                <p><b>{{post.get_type_of_work_display}}</b> </p>
+                <hr>
+                <span class="card-text"><strong>Рабочих мест: </strong>{{ post.number_persons }}</span>
+                <hr>
+                <p class="card-text">{{ post.content }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit in accusantium quae libero ipsum, quam enim repellat rem necessitatibus nesciunt recusandae commodi labore at perspiciatis sapiente! Perspiciatis perferendis minima quibusdam architecto expedita quia voluptatibus dolore provident, dignissimos incidunt iusto ea cum accusantium voluptas velit et nesciunt doloremque obcaecati nostrum odit.</p>
+                <p class="card-text"><strong>Регион: </strong>{{ post.city }} обл , {{ post.area }} район </p>
+                <span style="color: #00000077; font-weight: 600;">Вакансия опубликована: {{ post.time_create|date:"d M Y" }}</span>
+                <button style=" float: right; " onclick="goBack()" class="btn btn-primary">Назад</button><button style=" float: right; margin-right: 5px;" class="btn btn-primary" id="apply-button" data-applied="false" data-job-id="{{ post.id }}">Откликнутся</button>
+        </div>
+        <div class="block-user-vakanci" style="width: 18rem;">
+            {% if post.company %}
+            <h5 class="card-title">{{ post.company }}</h5>
+            <p class="card-text">{{ post.company.get_activity_display }}</p>
+            <p class="card-text">{{ post.company.description }}</p>
+            <p class="card-text">{{ post.company.address }}</p>
+            <span><i class="fa-brands fa-telegram"></i> {{post.company.telegram}}</span><br>
+            <span><i class="fa-brands fa-whatsapp"></i> {{post.company.whatsapp}}</span><br>
+            <span><i class="fa-solid fa-phone"></i> {{post.company.phone}}</span><br>
+            <span><i class="fa-solid fa-globe"></i> {{post.company.web_url}}</span><br>
+            <a href="{% url 'company' post.company.id %}"><button style="margin-top: 15px;" class="btn btn-primary">Подробне</button></a>
+            {% else %}
+            <h5 class="card-title">
+                {% if not post.user.first_name %}
+                    {{ post.user }}
+                {% else %}
+                    {{ post.user.first_name}} {{ post.user.last_name}}
+                {% endif %}
+            </h5>
+            <p class="card-text">{{ post.user.name_activity }}</p>
+            <p class="card-text">{{ post.user.description }}</p>
+            
+            <p class="card-text">{{ post.user.address }}</p>
+
+            <span><i class="fa-brands fa-telegram"></i> {{post.user.telegram}}</span><br>
+            <span><i class="fa-brands fa-whatsapp"></i> {{post.user.whatsapp}}</span><br>
+            <span><i class="fa-solid fa-phone"></i> {{post.user.phone}}</span><br>
+            <span><i class="fa-solid fa-globe"></i> {{post.user.web_url}}</span><br>
+            <a href="{% url 'profile_user' post.user.id %}"><button style="margin-top: 15px;" class="btn btn-primary">Подробне</button></a>
+
+            {% endif %}
+        </div>
+    </div>
+
+    <br><hr><br>
+    <h4>Похожые вакасии</h4>
+    <br>
+    {% for i in jobs %}
+    <a style="text-decoration: none;" href="{% url 'post' i.id %}">
+        <div class="block-similar-vakanci">
+            <h5 class="card-title">{{ i.title }}</h5>
+            <h5 class="card-text" style="font-weight: 700; color: #16a060;">От {{ i.wage }} сом</h5>
+            <p class="card-text">{{ i.content }}</p>
+            <p class="card-text">{{ i.city }}, {{ i.area }}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+
+
+<script>
+    function goBack() {
+    window.history.back();
+}
+
+
+document.getElementById('apply-button').addEventListener('click', function() {
+    let button = this;
+    let jobId = button.getAttribute('data-job-id');
+    let applied = button.getAttribute('data-applied') === 'true';
+    let url = applied ? "{% url 'cancel_application' %}" : "{% url 'apply_for_job' %}";
+    let data = new FormData();
+    data.append('job_id', jobId);
+
+    fetch(url, {
+        method: 'POST',
+        body: data,
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            if (applied) {
+                button.textContent = 'Откликнутся';
+                button.setAttribute('data-applied', 'false');
+                alert('Отклик отменен.')
+            } else {
+                button.textContent = 'Отменить';
+                button.setAttribute('data-applied', 'true');
+                alert('Отклик отправлен успешно!')
+            }
+            responseMessage.style.color = 'green';
+        } else {
+            responseMessage.innerText = 'Ошибка обработки запроса.';
+            alert('Что то пошол не так попробуйте потом')
+        }
+    })
+    .catch(error => console.error('Ошибка:', error));
+});
+</script>
+{% endblock %}

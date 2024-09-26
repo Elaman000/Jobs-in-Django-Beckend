@@ -1,0 +1,22 @@
+{% extends "jobs/index.html" %}
+{% block content %}
+<h1>{{title}}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Регистратция</button>
+</form>
+{% endblock %}
+
+    <!-- <h5 style="color:red;">{{ form.non_field_errors }}</h5>
+
+    <div class="form-floating mb-3">
+        {{ form.username }}
+        <label for="floatingInput">Ветите имя(Логин)</label>
+    </div>
+    <div class="form-floating">
+        {{ form.password }}
+        <label for="floatingPassword">Придумайте пароль</label>
+    </div> -->

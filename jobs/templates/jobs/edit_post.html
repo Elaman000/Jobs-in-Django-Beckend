@@ -1,0 +1,18 @@
+{% extends "jobs/index.html" %}
+{% load static %}
+{% block content %}
+
+<h1>{{title}}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Изменить</button>
+        <a href="{% url 'profile' %}">
+            <button class="btn btn-primary">
+                Отмена
+            </button>
+        </a>
+    </form>
+    
+
+{% endblock %}
