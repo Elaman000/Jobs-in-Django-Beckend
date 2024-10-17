@@ -155,8 +155,8 @@ class Jobs(models.Model):
         ('20', 'Машинист'),
     ]
 
-    title=models.CharField(max_length=250,verbose_name="Загаловак")
-    title_info = models.CharField(max_length=150, verbose_name="Под загаловок")
+    title=models.CharField(max_length=150,verbose_name="Загаловак")
+    title_info = models.CharField(max_length=250, verbose_name="Под загаловок")
     content = models.TextField(blank=True, verbose_name="Описание")
     time_create = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
     published = models.BooleanField(default=True, verbose_name="Опубликовано")

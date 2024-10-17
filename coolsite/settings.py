@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'jobs.apps.jobsConfig',
     'django_countries',
     'customuser',
-    # 'rest_framework',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

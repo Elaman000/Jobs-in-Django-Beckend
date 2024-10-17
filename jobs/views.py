@@ -12,12 +12,71 @@ from django.utils.html import strip_tags
 from .send_sms_to_telegram import send_sms_to_telegram
 from django.db.models import Q
 from django.views.decorators.http import require_POST
-# from rest_framework import generics
+from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
+from django.forms import model_to_dict
+
+
+from .serializers import *
 from .config import *
 from .models import *
 from .forms import *
 from .utils import *
+
+
+class JobsAPIView(APIView):
+    def get(self, request):
+        w = Jobs.objects.all()
+        return Response({'jobs_list': JobsSerializer(w, many=True).data})
+
+    def post(self, request):
+        serializer = JobsSerializer(data=request.data) # Сериализуем входящие данные
+        serializer.is_valid(raise_exception=True)  # Проверяем валидность данных
+        serializer.save()
+        return Response({'jobs_list': serializer.data})
+
+    def put(self, request, *ards, **kwargs):
+        pk = kwargs.get('pk', None)
+        if not pk:
+            return Response({'jobs_list':"Произошла ошыпка не указон уникальный ключь id"})
+        
+        try:
+            instance = Jobs.objects.get(pk = pk)
+        except:
+            return Response({'jobs_list':f'Не найден уникальный ключь id {pk}'})
+        
+        serializer = JobsSerializer(data=request.data, instance=instance)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=400)
+        serializer.save()   
+        return Response({"jobs_list":serializer.data})
+
+    def delete(self, request, *ards, **kwargs):
+        pk = kwargs.get('pk', None)
+        if not pk:
+            return Response({'jobs_list':"Произошла ошыпка не указон уникальный ключь id"})
+        try:
+            instance = Jobs.objects.get(pk = pk)
+            instance.delete()
+            return Response({'jobs_list':f'Удалён с уникальным ключьом id {pk}'})
+        except:
+            return Response({'jobs_list':f'Не найден уникальный ключь id {pk}'})
+        
+
+
+
+# class JobsAPIView(generics.ListAPIView):
+#     queryset = Jobs.objects.all()
+#     serializer_class = JobsSerializer
+
+
+
+
+
+
+
 
 
 @require_POST
