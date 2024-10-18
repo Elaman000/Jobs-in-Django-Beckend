@@ -26,6 +26,13 @@ from .forms import *
 from .utils import *
 
 
+
+
+class JobdAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Jobs.objects.all()
+    serializer_class = JobsSerializer
+
+
 class JobsAPIView(APIView):
     def get(self, request):
         w = Jobs.objects.all()
@@ -64,15 +71,6 @@ class JobsAPIView(APIView):
         except:
             return Response({'jobs_list':f'Не найден уникальный ключь id {pk}'})
         
-
-
-
-# class JobsAPIView(generics.ListAPIView):
-#     queryset = Jobs.objects.all()
-#     serializer_class = JobsSerializer
-
-
-
 
 
 

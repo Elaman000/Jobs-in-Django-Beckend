@@ -8,7 +8,7 @@ from jobs.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/jobslist/', JobsAPIView.as_view()),
-    path('api/v1/jobslist/<int:pk>/', JobsAPIView.as_view()),
+    path('api/v1/jobslist/<int:pk>/', JobdAPIDetailView.as_view()),
 
     path('', include("jobs.urls")),
 ]

@@ -141,3 +141,12 @@ LOGIN_REDIRECT_URL = "/"
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+# Глабальная настройки Django rest framework
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES':[
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer', # Поставте в коментарий чтобы пользователи видели данные в JSON формате
+    ]
+}
